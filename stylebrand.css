@@ -1,0 +1,97 @@
+
+    * {
+        margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+  body {
+    background-color: aqua !important;
+
+  }
+
+  nav {
+      background-color: yellow  !important;
+    padding: 15px 40px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    position: sticky !important;
+    top: 0% !important;
+    left: 0% !important;
+    height: 60px !important;
+
+  }
+
+
+    .abc {
+      background-color: yellow !important;
+    padding: 15px 40px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    position: sticky !important;
+    top: 0% !important;
+    left: 0% !important;
+
+  }
+
+.logo{
+    font-size: xx-large !important;
+    font-weight: 300 !important;
+    font-family: fantasy !important;
+    word-spacing: 3vh !important;
+   
+}
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+  }
+
+  ul li a {
+    color:black;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+  }
+
+  ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #38bdf8;
+    transition: 0.3s;
+}
+
+  ul li a:hover::after {
+    width: 100%;
+  }
+
+  .menu {
+      display: none;
+      font-size: 26px;
+      color: white;
+      cursor: pointer;
+    }
+    .f{
+
+    
+    border: 2px solid yellow;
+    color: rgb(24, 21, 2);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height: 25vh;
+    padding: 10px;
+    background-color: rgb(223, 80, 223);
+    }
+    #z1{
+        color: white;
+        
+    }
+
