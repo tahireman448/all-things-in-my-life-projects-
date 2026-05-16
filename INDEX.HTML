@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Car Showroom - Ultimate Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(-45deg,#0f0f23,#1a1a2e,#16213e,#0f3460,#533483);
+    background-size:600% 600%;
+    animation:gradientShift 20s ease infinite;
+    color:white;
+    overflow-x:hidden;
+    position:relative;
+}
+
+@keyframes gradientShift{
+0%,100%{background-position:0% 50%;}
+25%{background-position:100% 50%;}
+50%{background-position:100% 100%;}
+75%{background-position:0% 100%;}
+}
+
+/* PARTICLE SYSTEM */
+.particles{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+}
+
+.particle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+    border-radius:50%;
+    animation:particleFloat 6s infinite linear;
+}
+
+@keyframes particleFloat{
+0%{
+    transform:translateY(100vh) rotate(0deg);
+    opacity:0;
+}
+10%{
+    opacity:1;
+}
+90%{
+    opacity:1;
+}
+100%{
+    transform:translateY(-100px) rotate(360deg);
+    opacity:0;
+}
+}
+
+/* HEADER */
+header{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 40px;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(15px);
+z-index:1000;
+transition:0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+box-shadow:0 8px 32px rgba(0,0,0,0.3);
+}
+
+header.scrolled{
+background:rgba(0,0,0,0.9);
+transform:translateY(-5px);
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-family:'Orbitron';
+font-size:2.2rem;
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#45b7d1);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+background-clip:text;
+cursor:pointer;
+animation:logoGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow{
+from{text-shadow:0 0 20px rgba(255,107,107,0.5);}
+to{text-shadow:0 0 30px rgba(78,205,196,0.8);}
+}
+
+.nav-links{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+position:relative;
+transition:0.3s;
+padding:8px 0;
+}
+
+.nav-links a::after{
+content:'';
+position:absolute;
+bottom:0;
+left:0;
+width:0;
+height:2px;
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+transition:0.3s;
+}
+
+.nav-links a:hover::after{
+width:100%;
+}
+
+.search-container{
+position:relative;
+}
+
+.search-box{
+padding:10px 20px;
+border:2px solid transparent;
+border-radius:30px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+color:white;
+width:0;
+opacity:0;
+transition:0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.search-container.active .search-box{
+width:280px;
+opacity:1;
+border-color:#4ecdc4;
+box-shadow:0 0 20px rgba(78,205,196,0.3);
+}
+
+.cart-icon, .favorites-btn{
+background:none;
+border:none;
+color:white;
+font-size:1.3rem;
+cursor:pointer;
+position:relative;
+margin-left:20px;
+transition:0.3s;
+padding:10px;
+border-radius:50%;
+}
+
+.cart-icon:hover, .favorites-btn:hover{
+color:#4ecdc4;
+transform:scale(1.2) rotate(10deg);
+box-shadow:0 0 20px rgba(78,205,196,0.5);
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at 20% 80%,rgba(120,119,198,0.3) 0%,transparent 50%),
+radial-gradient(circle at 80% 20%,rgba(255,119,198,0.3) 0%,transparent 50%),
+radial-gradient(circle at 40% 40%,rgba(120,219,255,0.3) 0%,transparent 50%);
+animation:heroBg 8s ease infinite;
+}
+
+@keyframes heroBg{
+0%,100%{opacity:0.4;}
+50%{opacity:0.8;}
+}
+
+.hero h1{
+font-size:5rem;
+font-family:'Orbitron';
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#45b7d1);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:30px;
+animation:heroTitle 4s ease infinite;
+filter:drop-shadow(0 0 30px rgba(255,107,107,0.5));
+}
+
+@keyframes heroTitle{
+0%,100%{transform:scale(1) rotateX(0deg);}
+50%{transform:scale(1.05) rotateX(5deg);}
+}
+
+.cta{
+display:inline-block;
+padding:18px 45px;
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+border-radius:50px;
+text-decoration:none;
+color:white;
+font-weight:600;
+font-size:1.2rem;
+position:relative;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(255,107,107,0.4);
+animation:ctaFloat 3s ease-in-out infinite;
+}
+
+@keyframes ctaFloat{
+0%,100%{transform:translateY(0px);}
+50%{transform:translateY(-10px);}
+}
+
+.cta::before{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,transparent, rgba(255,255,255,0.3),transparent);
+transition:0.5s;
+}
+
+.cta:hover::before{left:100%;}
+
+/* SECTION */
+.section{
+padding:120px 40px;
+position:relative;
+}
+
+.title{
+text-align:center;
+font-size:3rem;
+margin-bottom:60px;
+font-family:'Orbitron';
+position:relative;
+}
+
+.title::after{
+content:'';
+position:absolute;
+bottom:-20px;
+left:50%;
+transform:translateX(-50%);
+width:100px;
+height:4px;
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+border-radius:2px;
+}
+
+/* FILTERS */
+.filters{
+display:flex;
+gap:15px;
+justify-content:center;
+margin-bottom:50px;
+flex-wrap:wrap;
+}
+
+.filter-btn{
+padding:12px 25px;
+border:2px solid transparent;
+border-radius:30px;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+color:white;
+cursor:pointer;
+transition:0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+position:relative;
+overflow:hidden;
+}
+
+.filter-btn::before{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+transition:0.6s;
+}
+
+.filter-btn:hover::before{left:100%;}
+
+.filter-btn.active, .filter-btn:hover{
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+border-color:#4ecdc4;
+transform:translateY(-3px) scale(1.05);
+box-shadow:0 10px 25px rgba(255,107,107,0.4);
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:40px;
+}
+
+.grid.hidden{display:none;}
+
+/* CARD - 3D ENHANCED */
+.card{
+background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));
+backdrop-filter:blur(20px);
+border-radius:25px;
+overflow:hidden;
+transition:0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+position:relative;
+cursor:pointer;
+border:1px solid rgba(255,255,255,0.1);
+transform-style:preserve-3d;
+}
+
+.card:hover{
+transform:translateY(-20px) rotateX(5deg) rotateY(5deg) scale(1.05);
+box-shadow:0 30px 60px rgba(0,0,0,0.5), 0 0 50px rgba(255,107,107,0.3);
+border-color:rgba(78,205,196,0.5);
+}
+
+.card.favorite::before{
+content:'\f004';
+font-family:'Font Awesome 6 Free';
+font-weight:900;
+position:absolute;
+top:20px;
+right:20px;
+color:#ff6b6b;
+font-size:1.8rem;
+z-index:10;
+animation:heartBeat 1.5s ease infinite;
+text-shadow:0 0 10px rgba(255,107,107,0.8);
+}
+
+@keyframes heartBeat{
+0%,50%{transform:scale(1);}
+25%,75%{transform:scale(1.2);}
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+transition:0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.card:hover img{
+transform:scale(1.15) rotate(2deg);
+filter:brightness(1.1) contrast(1.1);
+}
+
+/* SHINE EFFECT */
+.card::after{
+content:'';
+position:absolute;
+top:0;
+left:-120%;
+width:80%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),rgba(255,255,255,0.6),transparent);
+transform:skewX(-25deg);
+transition:1s;
+}
+
+.card:hover::after{
+left:120%;
+}
+
+/* CONTENT */
+.card-body{
+padding:30px;
+text-align:center;
+}
+
+.price{
+color:#4ecdc4;
+font-size:1.5rem;
+margin:15px 0;
+font-weight:700;
+text-shadow:0 0 10px rgba(78,205,196,0.5);
+animation:priceGlow 2s ease infinite alternate;
+}
+
+@keyframes priceGlow{
+from{text-shadow:0 0 10px rgba(78,205,196,0.5);}
+to{text-shadow:0 0 20px rgba(78,205,196,0.8);}
+}
+
+.card-tags{
+display:flex;
+gap:8px;
+justify-content:center;
+margin:15px 0;
+font-size:0.85rem;
+opacity:0.9;
+flex-wrap:wrap;
+}
+
+.tag{
+background:linear-gradient(45deg,rgba(78,205,196,0.2),rgba(255,107,107,0.2));
+padding:5px 12px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+transition:0.3s;
+}
+
+.tag:hover{transform:scale(1.1);}
+
+/* BUTTON */
+.btn{
+margin-top:15px;
+padding:12px 30px;
+border:2px solid transparent;
+border-radius:25px;
+background:linear-gradient(45deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05));
+color:white;
+cursor:pointer;
+position:relative;
+overflow:hidden;
+transition:0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+width:100%;
+font-weight:600;
+backdrop-filter:blur(10px);
+}
+
+.btn::before{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
+transition:0.6s;
+}
+
+.btn:hover::before{left:100%;}
+
+.btn:hover{
+background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+border-color:#4ecdc4;
+transform:translateY(-3px) scale(1.05);
+box-shadow:0 15px 35px rgba(255,107,107,0.4);
+}
+
+/* RIPPLE */
+.ripple{
+position:absolute;
+width:120px;
+height:120px;
+background:rgba(78,205,196,0.6);
+border-radius:50%;
+transform:scale(0);
+animation:ripple 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+@keyframes ripple{
+to{transform:scale(5);opacity:0;}
+}
+
+/* MODAL - ENHANCED */
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+backdrop-filter:blur(20px);
+display:none;
+z-index:2000;
+}
+
+.modal.active{
+display:flex;
+align-items:center;
+justify-content:center;
+animation:modalAppear 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+@keyframes modalAppear{
+from{opacity:0;transform:scale(0.8) rotateX(-10deg);}
+to{opacity:1;transform:scale(1) rotateX(0deg);}
+}
+
+.modal-content{
+background:linear-gradient(145deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));
+backdrop-filter:blur(30px);
+border-radius:30px;
+max-width:700px;
+width:92%;
+max-height:92vh;
+overflow-y:auto;
+position:relative;
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 30px 80px rgba(0,0,0,0.7);
+animation:modalSlide 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+@keyframes modalSlide{
+from{transform:scale(0.7) translateY(50px);opacity:0;}
+to{transform:scale(1) translateY(0);opacity:1;}
+}
+
+.close{
+position:absolute;
+top:20px;
+right:25px;
+font-size:2.5rem;
+cursor:pointer;
+color:#ff6b6b;
+transition:0.3s;
+text-shadow:0 0 15px rgba(255,107,107,0.8);
+}
+
+.close:hover{transform:rotate(90deg) scale(1.2);}
+
+/* CAR CONFIGURATOR */
+.configurator{
+margin-top:30px;
+padding:25px;
+background:linear-gradient(145deg,rgba(78,205,196,0.1),rgba(255,107,107,0.1));
+border-radius:20px;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.color-option{
+display:inline-block;
+width:40px;
+height:40px;
+border-radius:50%;
+margin:0 10px 10px 0;
+cursor:pointer;
+border:3px solid transparent;
+transition:0.3s;
+position:relative;
+}
+
+.color-option.active{
+border-color:#4ecdc4;
+box-shadow:0 0 20px rgba(78,205,196,0.6);
+transform:scale(1.2);
+}
+
+.color-option:hover{transform:scale(1.1);}
+
+@media(max-width:768px){
+.hero h1{font-size:3rem;}
+.section{padding:80px 20px;}
+.title{font-size:2rem;}
+.grid{grid-template-columns:1fr;}
+.nav-links{gap:10px;}
+.search-box{width:220px;}
+}
+</style>
+</head>
+
+<body>
+<!-- PARTICLE SYSTEM -->
+<div class="particles" id="particles"></div>
+
+<header>
+<nav>
+<div class="logo" onclick="scrollToTop()">CARX</div>
+<ul class="nav-links">
+<li><a href="#home">Home</a></li>
+<li><a href="#cars">Collection</a></li>
+<li><a href="#" onclick="showCart(event)">Cart <i class="fas fa-shopping-cart cart-icon" id="cartIcon"><span class="cart-count" id="cartCount">0</span></i></a></li>
+<li><a href="#" onclick="showFavorites(event)">Favorites <i class="fas fa-heart favorites-btn" id="favoritesIcon"><span class="favorites-count" id="favoritesCount">0</span></i></a></li>
+</ul>
+<div class="search-container">
+<input type="text" class="search-box" id="searchBox" placeholder="🔍 Search 30+ Luxury Cars...">
+<i class="fas fa-search" onclick="toggleSearch()" style="cursor:pointer;font-size:1.2rem;"></i>
+</div>
+</nav>
+</header>
+
+<section id="home" class="hero">
+<div>
+<h1>ULTIMATE LUXURY COLLECTION</h1>
+<a href="#cars" class="cta" onclick="filterCars('all')">DISCOVER NOW</a>
+</div>
+</section>
+
+<section id="cars" class="section">
+<h2 class="title">EXCLUSIVE SUPERCARS</h2>
+
+<div class="filters">
+<button class="filter-btn active" data-filter="all" onclick="filterCars('all')">All (18)</button>
+<button class="filter-btn" data-filter="supercar" onclick="filterCars('supercar')">Supercars (6)</button>
+<button class="filter-btn" data-filter="suv" onclick="filterCars('suv')">SUVs (5)</button>
+<button class="filter-btn" data-filter="coupe" onclick="filterCars('coupe')">Coupes (4)</button>
+<button class="filter-btn" data-filter="hypercar" onclick="filterCars('hypercar')">Hypercars (3)</button>
+</div>
+
+<div class="grid" id="carsGrid">
+
+<!-- SUPERCARS -->
+<div class="card" data-category="supercar" data-name="Supercar X1" data-price="299999" data-img="https://images.unsplash.com/photo-1494976388531-d1058494cdd8">
+<img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800">
+<div class="card-body">
+<h3>Supercar X1</h3>
+<div class="price">$299,999</div>
+<div class="card-tags">
+<span class="tag">V12 6.0L</span><span class="tag">1200hp</span><span class="tag">0-60: 2.8s</span>
+</div>
+<button class="btn" onclick="openCarModal('Supercar X1',299999,'https://images.unsplash.com/photo-1494976388531-d1058494cdd8',{engine:'V12 6.0L Twin-Turbo',hp:'1200hp',topSpeed:'220mph',seats:2,weight:'2970lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="hypercar" data-name="Hyperion ZR1" data-price="2899999" data-img="https://images.unsplash.com/photo-1549924231-f129b911e442">
+<img src="https://images.unsplash.com/photo-1549924231-f129b911e442?w=800">
+<div class="card-body">
+<h3>Hyperion ZR1</h3>
+<div class="price">$2.9M</div>
+<div class="card-tags">
+<span class="tag">Hybrid V8</span><span class="tag">1600hp</span><span class="tag">0-60: 2.1s</span>
+</div>
+<button class="btn" onclick="openCarModal('Hyperion ZR1',2899999,'https://images.unsplash.com/photo-1549924231-f129b911e442',{engine:'Hybrid V8 4.0L',hp:'1600hp',topSpeed:'250mph',seats:2,weight:'2780lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="supercar" data-name="Velocity GT" data-price="749999" data-img="https://images.unsplash.com/photo-1552519507-da3b142c6e3d">
+<img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800">
+<div class="card-body">
+<h3>Velocity GT</h3>
+<div class="price">$749,999</div>
+<div class="card-tags">
+<span class="tag">V10 5.2L</span><span class="tag">950hp</span><span class="tag">210mph</span>
+</div>
+<button class="btn" onclick="openCarModal('Velocity GT',749999,'https://images.unsplash.com/photo-1552519507-da3b142c6e3d',{engine:'V10 5.2L',hp:'950hp',topSpeed:'210mph',seats:2,weight:'3150lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<!-- SUVs -->
+<div class="card" data-category="suv" data-name="Apex Luxe SUV" data-price="189999" data-img="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800">
+<div class="card-body">
+<h3>Apex Luxe SUV</h3>
+<div class="price">$189,999</div>
+<div class="card-tags">
+<span class="tag">V8 Twin-Turbo</span><span class="tag">650hp</span><span class="tag">7 Seats</span>
+</div>
+<button class="btn" onclick="openCarModal('Apex Luxe SUV',189999,'https://images.unsplash.com/photo-1503376780353-7e6692767b70',{engine:'V8 4.0L Twin-Turbo',hp:'650hp',topSpeed:'180mph',seats:7,weight:'5200lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="suv" data-name="Titan Executive" data-price="225000" data-img="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957">
+<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800">
+<div class="card-body">
+<h3>Titan Executive</h3>
+<div class="price">$225,000</div>
+<div class="card-tags">
+<span class="tag">V12 6.75L</span><span class="tag">563hp</span><span class="tag">Luxury</span>
+</div>
+<button class="btn" onclick="openCarModal('Titan Executive',225000,'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957',{engine:'V12 6.75L',hp:'563hp',topSpeed:'155mph',seats:5,weight:'5400lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<!-- COUPES -->
+<div class="card" data-category="coupe" data-name="Phantom GT" data-price="349999" data-img="https://images.unsplash.com/photo-1606216794075-9c4c947921a5">
+<img src="https://images.unsplash.com/photo-1606216794075-9c4c947921a5?w=800">
+<div class="card-body">
+<h3>Phantom GT</h3>
+<div class="price">$349,999</div>
+<div class="card-tags">
+<span class="tag">W12 6.0L</span><span class="tag">700hp</span><span class="tag">GT</span>
+</div>
+<button class="btn" onclick="openCarModal('Phantom GT',349999,'https://images.unsplash.com/photo-1606216794075-9c4c947921a5',{engine:'W12 6.0L',hp:'700hp',topSpeed:'211mph',seats:4,weight:'4800lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<!-- MORE CARS -->
+<div class="card" data-category="hypercar" data-name="Quantum RS" data-price="4500000" data-img="https://images.unsplash.com/photo-1571896349840-e26b311e764f">
+<img src="https://images.unsplash.com/photo-1571896349840-e26b311e764f?w=800">
+<div class="card-body">
+<h3>Quantum RS</h3>
+<div class="price">$4.5M</div>
+<div class="card-tags">
+<span class="tag">Electric</span><span class="tag">2000hp</span><span class="tag">1.9s</span>
+</div>
+<button class="btn" onclick="openCarModal('Quantum RS',4500000,'https://images.unsplash.com/photo-1571896349840-e26b311e764f',{engine:'Quad Electric Motors',hp:'2000hp',topSpeed:'248mph',seats:2,weight:'2650lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="supercar" data-name="Nebula Racer" data-price="899999" data-img="https://images.unsplash.com/photo-1547803080-b1f4e8ee7a08">
+<img src="https://images.unsplash.com/photo-1547803080-b1f4e8ee7a08?w=800">
+<div class="card-body">
+<h3>Nebula Racer</h3>
+<div class="price">$899,999</div>
+<div class="card-tags">
+<span class="tag">V8 Hybrid</span><span class="tag">1100hp</span><span class="tag">230mph</span>
+</div>
+<button class="btn" onclick="openCarModal('Nebula Racer',899999,'https://images.unsplash.com/photo-1547803080-b1f4e8ee7a08',{engine:'V8 Hybrid 4.5L',hp:'1100hp',topSpeed:'230mph',seats:2,weight:'2850lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="suv" data-name="Vortex Beast" data-price="275000" data-img="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a">
+<img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800">
+<div class="card-body">
+<h3>Vortex Beast</h3>
+<div class="price">$275,000</div>
+<div class="card-tags">
+<span class="tag">V8 Supercharged</span><span class="tag">707hp</span><span class="tag">Off-Road</span>
+</div>
+<button class="btn" onclick="openCarModal('Vortex Beast',275000,'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a',{engine:'V8 6.2L Supercharged',hp:'707hp',topSpeed:'190mph',seats:5,weight:'5800lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="coupe" data-name="Eclipse S" data-price="425000" data-img="https://images.unsplash.com/photo-1482441666634-19d793b41448">
+<img src="https://images.unsplash.com/photo-1482441666634-19d793b41448?w=800">
+<div class="card-body">
+<h3>Eclipse S</h3>
+<div class="price">$425,000</div>
+<div class="card-tags">
+<span class="tag">V6 Twin-Turbo</span><span class="tag">580hp</span><span class="tag">GT</span>
+</div>
+<button class="btn" onclick="openCarModal('Eclipse S',425000,'https://images.unsplash.com/photo-1482441666634-19d793b41448',{engine:'V6 3.5L Twin-Turbo',hp:'580hp',topSpeed:'195mph',seats:4,weight:'4100lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="suv" data-name="Summit Elite" data-price="325000" data-img="https://images.unsplash.com/photo-1558618047-3c8c76bbb17e">
+<img src="https://images.unsplash.com/photo-1558618047-3c8c76bbb17e?w=800">
+<div class="card-body">
+<h3>Summit Elite</h3>
+<div class="price">$325,000</div>
+<div class="card-tags">
+<span class="tag">V8 Hybrid</span><span class="tag">750hp</span><span class="tag">AWD</span>
+</div>
+<button class="btn" onclick="openCarModal('Summit Elite',325000,'https://images.unsplash.com/photo-1558618047-3c8c76bbb17e',{engine:'V8 Hybrid 4.0L',hp:'750hp',topSpeed:'185mph',seats:5,weight:'5600lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="hypercar" data-name="Apex Predator" data-price="3500000" data-img="https://images.unsplash.com/photo-1578662996442-48f60103fc96">
+<img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800">
+<div class="card-body">
+<h3>Apex Predator</h3>
+<div class="price">$3.5M</div>
+<div class="card-tags">
+<span class="tag">V12 Hybrid</span><span class="tag">1800hp</span><span class="tag">1.8s</span>
+</div>
+<button class="btn" onclick="openCarModal('Apex Predator',3500000,'https://images.unsplash.com/photo-1578662996442-48f60103fc96',{engine:'V12 Hybrid 6.5L',hp:'1800hp',topSpeed:'260mph',seats:2,weight:'2700lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="supercar" data-name="Drift King" data-price="599999" data-img="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957">
+<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800">
+<div class="card-body">
+<h3>Drift King</h3>
+<div class="price">$599,999</div>
+<div class="card-tags">
+<span class="tag">V8 5.0L</span><span class="tag">800hp</span><span class="tag">RWD</span>
+</div>
+<button class="btn" onclick="openCarModal('Drift King',599999,'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957',{engine:'V8 5.0L Supercharged',hp:'800hp',topSpeed:'205mph',seats:4,weight:'3800lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="coupe" data-name="Skyline Elite" data-price="285000" data-img="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800">
+<div class="card-body">
+<h3>Skyline Elite</h3>
+<div class="price">$285,000</div>
+<div class="card-tags">
+<span class="tag">V6 Twin-Turbo</span><span class="tag">600hp</span><span class="tag">AWD</span>
+</div>
+<button class="btn" onclick="openCarModal('Skyline Elite',285000,'https://images.unsplash.com/photo-1503376780353-7e6692767b70',{engine:'V6 3.8L Twin-Turbo',hp:'600hp',topSpeed:'195mph',seats:4,weight:'3900lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+<div class="card" data-category="suv" data-name="Glacier Pro" data-price="199999" data-img="https://images.unsplash.com/photo-1606216794075-9c4c947921a5">
+<img src="https://images.unsplash.com/photo-1606216794075-9c4c947921a5?w=800">
+<div class="card-body">
+<h3>Glacier Pro</h3>
+<div class="price">$199,999</div>
+<div class="card-tags">
+<span class="tag">V6 Hybrid</span><span class="tag">450hp</span><span class="tag">Off-Road</span>
+</div>
+<button class="btn" onclick="openCarModal('Glacier Pro',199999,'https://images.unsplash.com/photo-1606216794075-9c4c947921a5',{engine:'V6 Hybrid 3.0L',hp:'450hp',topSpeed:'170mph',seats:5,weight:'5100lbs'})">CONFIGURE</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- CAR MODAL -->
+<div class="modal" id="carModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">&times;</span>
+<div class="car-details" id="carDetails"></div>
+</div>
+</div>
+
+<!-- CART MODAL -->
+<div class="modal" id="cartModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<div style="padding:40px;text-align:center;">
+<h2 style="font-family:'Orbitron';margin-bottom:25px;font-size:2.2rem;"><i class="fas fa-shopping-cart"></i> SHOPPING CART</h2>
+<div id="cartItems" style="max-height:450px;overflow-y:auto;margin-bottom:30px;"></div>
+<div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+<button class="buy-btn" onclick="checkout()" style="padding:15px 40px;">PROCEED TO CHECKOUT</button>
+<button class="btn" onclick="clearCart()" style="background:rgba(255,107,107,0.2);border-color:#ff6b6b;">CLEAR CART</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- FAVORITES MODAL -->
+<div class="modal" id="favoritesModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<div style="padding:40px;text-align:center;">
+<h2 style="font-family:'Orbitron';margin-bottom:25px;font-size:2.2rem;"><i class="fas fa-heart"></i> YOUR FAVORITES</h2>
+<div id="favoritesItems" style="max-height:450px;overflow-y:auto;"></div>
+</div>
+</div>
+</div>
+
+<script>
+// GLOBAL STATE
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let currentCar = null;
+let particles = [];
+
+// CAR DATABASE
+const carDatabase = {
+    'Supercar X1': {price:299999,img:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8',colors:['Obsidian Black','Pearl White','Crimson Red']},
+    'Hyperion ZR1': {price:2899999,img:'https://images.unsplash.com/photo-1549924231-f129b911e442',colors:['Carbon Black','Silver Ghost','Solar Yellow']},
+    // Add more as needed
+};
+
+// INIT
+document.addEventListener('DOMContentLoaded', function() {
+    initParticles();
+    updateCartCount();
+    updateFavoritesCount();
+    headerScrollEffect();
+    initFavorites();
+});
+
+// PARTICLE SYSTEM
+function initParticles() {
+    const container = document.getElementById('particles');
+    for(let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        container.appendChild(particle);
+    }
+}
+
+// Header scroll effect
+function headerScrollEffect() {
+    window.addEventListener('scroll', () => {
+        document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+}
+
+// Search & Filter
+function toggleSearch() {
+    document.querySelector('.search-container').classList.toggle('active');
+}
+
+document.getElementById('searchBox').addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+        const matches = card.dataset.name.toLowerCase().includes(term) || 
+                       card.textContent.toLowerCase().includes(term);
+        card.style.display = matches ? 'block' : 'none';
+    });
+});
+
+function filterCars(category) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    document.querySelectorAll('.card').forEach(card => {
+        card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
+    });
+}
+
+// Enhanced Modal
+function openCarModal(name, price, imgUrl, specs) {
+    currentCar = { name, price, img: imgUrl, specs };
+    const modal = document.getElementById('carModal');
+    const details = document.getElementById('carDetails');
+    
+    details.innerHTML = `
+        <img src="${imgUrl}" alt="${name}" style="filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));">
+        <h2 class="car-title" style="font-size:2.5rem;">${name}</h2>
+        <div class="car-price" style="font-size:1.8rem;">$${price.toLocaleString()}</div>
+        
+        <div class="car-specs">
+            <div class="spec-item"><div class="spec-label">Engine</div><div>${specs.engine}</div></div>
+            <div class="spec-item"><div class="spec-label">Power</div><div>${specs.hp}</div></div>
+            <div class="spec-item"><div class="spec-label">Top Speed</div><div>${specs.topSpeed}</div></div>
+            <div class="spec-item"><div class="spec-label">Seats</div><div>${specs.seats}</div></div>
+            <div class="spec-item"><div class="spec-label">Weight</div><div>${specs.weight}</div></div>
+        </div>
+        
+        <div class="configurator">
+            <h4 style="margin-bottom:15px;color:#4ecdc4;">🎨 Color Configurator</h4>
+            <div id="colorOptions" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;"></div>
+        </div>
+        
+        <div class="buy-form">
+            <form onsubmit="buyCar(event)">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="buyerName" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Phone</label>
+                    <input type="tel" id="buyerPhone" placeholder="+1 (555) 123-4567" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-palette"></i> Selected Color</label>
+                    <input type="text" id="selectedColor" readonly style="background:rgba(255,255,255,0.1);cursor:pointer;">
+                </div>
+                <button type="submit" class="buy-btn" style="font-size:1.2rem;">
+                    <i class="fas fa-credit-card"></i> SECURE PURCHASE - $${price.toLocaleString()}
+                </button>
+            </form>
+            <div class="success-msg" id="successMsg" style="display:none;">
+                <i class="fas fa-check-circle" style="font-size:2rem;color:#4ecdc4;"></i>
+                Congratulations! Your ${name} has been reserved. Our luxury consultant will contact you within 24 hours to finalize delivery.
+            </div>
+        </div>
+        
+        <div style="display:flex;gap:15px;margin-top:30px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn" onclick="addToCart()" style="background:rgba(78,205,196,0.2);border-color:#4ecdc4;">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn" onclick="toggleFavorite('${name}')" style="background:rgba(255,107,107,0.2);border-color:#ff6b6b;">
+                <i class="fas fa-heart"></i> Favorite
+            </button>
+        </div>
+    `;
+    
+    initColorConfigurator();
+    modal.classList.add('active');
+    createParticlesBurst(event.target);
+}
+
+// Color Configurator
+function initColorConfigurator() {
+    const colors = ['#000000','#ffffff','#1e3a8a','#dc2626','#059669','#d97706','#8b5cf6'];
+    const container = document.getElementById('colorOptions');
+    const selectedInput = document.getElementById('selectedColor');
+    
+    container.innerHTML = colors.map((color, index) => 
+        `<div class="color-option" data-color="${color}" style="background:${color};" title="Color ${index+1}" onclick="selectColor('${color}',this)"></div>`
+    ).join('');
+    
+    selectedInput.value = 'Select a color above';
+}
+
+function selectColor(color, element) {
+    document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+    document.getElementById('selectedColor').value = color;
+    document.getElementById('selectedColor').style.background = color;
+}
+
+// Cart & Favorites (enhanced from previous)
+function addToCart() {
+    if (!currentCar || !document.getElementById('selectedColor').value.includes('#')) {
+        alert('Please select a color first!');
+        return;
+    }
+    
+    const existing = cart.find(item => item.name === currentCar.name);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({ ...currentCar, quantity: 1, color: document.getElementById('selectedColor').value });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    createRippleEffect(event.target);
+    alert('✅ Added to cart with selected color!');
+}
+
+function showCart(e) {
+    e.preventDefault();
+    const modal = document.getElementById('cartModal');
+    const cartItems = document.getElementById('cartItems');
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<div style="color:#4ecdc4;font-size:1.2rem;padding:40px 0;"><i class="fas fa-shopping-cart" style="font-size:4rem;margin-bottom:20px;opacity:0.5;"></i><br>Your cart is empty. Start shopping!</div>';
+    } else {
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        cartItems.innerHTML = cart.map(item => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:15px;margin-bottom:10px;">
+                <div style="flex:1;">
+                    <h4 style="margin:0 0 5px 0;">${item.name}</h4>
+                    <p style="margin:0;color:#4ecdc4;font-weight:600;">$${item.price.toLocaleString()} × ${item.quantity} = $${(item.price * item.quantity).toLocaleString()}</p>
+                    ${item.color ? `<p style="margin:5px 0 0 0;font-size:0.9rem;">Color: <span style="background:${item.color};width:20px;height:20px;display:inline-block;border-radius:50%;border:2px solid white;"></span></p>` : ''}
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <button onclick="updateCartQuantity('${item.name}',-1)" style="background:rgba(78,205,196,0.3);border:none;border-radius:50%;width:35px;height:35px;color:white;font-weight:600;cursor:pointer;">−</button>
+                    <span style="min-width:30px;text-align:center;font-weight:600;">${item.quantity}</span>
+                    <button onclick="updateCartQuantity('${item.name}',1)" style="background:rgba(78,205,196,0.3);border:none;border-radius:50%;width:35px;height:35px;color:white;font-weight:600;cursor:pointer;">+</button>
+                    <button onclick="removeFromCart('${item.name}')" style="background:#ff6b6b;color:white;border:none;border-radius:50%;width:40px;height:40px;margin-left:10px;cursor:pointer;font-weight:600;">×</button>
+                </div>
+            </div>
+        `).join('') + `<div style="margin-top:30px;padding:20px;background:rgba(78,205,196,0.1);border-radius:15px;border:1px solid #4ecdc4;">
+            <h3 style="color:#4ecdc4;margin:0;">TOTAL: $${total.toLocaleString()}</h3>
+        </div>`;
+    }
+    
+    modal.classList.add('active');
+}
+
+function updateCartQuantity(name, change) {
+    const item = cart.find(item => item.name === name);
+    if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            removeFromCart(name);
+        } else {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showCart({preventDefault:()=>{}});
+        }
+    }
+}
+
+function initFavorites() {
+    favorites.forEach(name => {
+        const card = document.querySelector(`[data-name="${name}"]`);
+        if (card) card.classList.add('favorite');
+    });
+}
+
+function toggleFavorite(carName) {
+    const index = favorites.indexOf(carName);
+    const card = document.querySelector(`[data-name="${carName}"]`);
+    
+    if (index > -1) {
+        favorites.splice(index, 1);
+        if (card) card.classList.remove('favorite');
+    } else {
+        favorites.push(carName);
+        if (card) card.classList.add('favorite');
+    }
+    
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    updateFavoritesCount();
+}
+
+function updateCartCount() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cartCount').textContent = count;
+}
+
+function updateFavoritesCount() {
+    document.getElementById('favoritesCount').textContent = favorites.length;
+}
+
+function removeFromCart(carName) {
+    cart = cart.filter(item => item.name !== carName);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    showCart({preventDefault:()=>{}});
+}
+
+function clearCart() {
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    showCart({preventDefault:()=>{}});
+}
+
+function buyCar(e) {
+    e.preventDefault();
+    const name = document.getElementById('buyerName').value;
+    const phone = document.getElementById('buyerPhone').value;
+    const color = document.getElementById('selectedColor').value;
+    
+    if (name && phone && color.includes('#')) {
+        document.getElementById('successMsg').style.display = 'block';
+        setTimeout(() => document.getElementById('successMsg').style.display = 'none', 8000);
+        createParticlesBurst(e.target);
+        
+        cart = cart.filter(item => item.name !== currentCar.name);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+    } else {
+        alert('Please fill all fields and select a color!');
+    }
+}
+
+function checkout() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    alert(`🎉 Checkout Successful!\n\nTotal: $${total.toLocaleString()}\n\nThank you for choosing CARX Luxury!\nYour order confirmation will be emailed shortly.`);
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    closeModal();
+}
+
+// UTILITIES
+function closeModal() {
+    document.querySelectorAll('.modal').forEach(modal => modal.classList.remove('active'));
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function createRippleEffect(element) {
+    let ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+    const rect = element.getBoundingClientRect();
+    ripple.style.left = (event.clientX - rect.left - 60) + 'px';
+    ripple.style.top = (event.clientY - rect.top - 60) + 'px';
+    element.style.position = 'relative';
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 700);
+}
+
+function createParticlesBurst(element) {
+    for(let i = 0; i < 12; i++) {
+        setTimeout(() => {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position:fixed;
+                left:${event.clientX}px;
+                top:${event.clientY}px;
+                width:6px;height:6px;
+                background:linear-gradient(45deg,#ff6b6b,#4ecdc4);
+                border-radius:50%;
+                pointer-events:none;
+                z-index:3000;
+                animation:particleBurst 1s ease-out forwards;
+            `;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1000);
+        }, i * 50);
+    }
+}
+
+document.querySelectorAll('.btn, .cta').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        createRippleEffect(this);
+    });
+});
+
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+});
+
+document.querySelectorAll('.card').forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+    card.style.animation = 'cardSlideIn 0.8s cubic-bezier(0.68,-0.55,0.265,1.55) forwards';
+});
+
+const style = document.createElement('style');
+style.textContent = `
+@keyframes cardSlideIn {
+    from { opacity:0; transform:translateY(50px) scale(0.9); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes particleBurst {
+    0% { transform:scale(1) translate(0,0); opacity:1; }
+    100% { transform:scale(0) translate(var(--dx), var(--dy)); opacity:0; }
+}`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
