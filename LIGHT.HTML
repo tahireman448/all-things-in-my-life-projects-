@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Light Toggle</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #1a1a1a;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .light-container {
+            text-align: center;
+        }
+
+        .light {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            border: 8px solid #333;
+            box-shadow: 
+                0 0 20px rgba(0,0,0,0.5),
+                inset 0 0 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .light.off {
+            background: #444;
+            box-shadow: 
+                0 0 20px rgba(0,0,0,0.5),
+                inset 0 0 40px rgba(0,0,0,0.6);
+        }
+
+        .light.on {
+            background: radial-gradient(circle, #ffeb3b 0%, #ff9800 70%, #f57c00 100%);
+            box-shadow: 
+                0 0 50px #ffeb3b,
+                0 0 100px #ff9800,
+                inset 0 0 40px rgba(255,235,59,0.5);
+        }
+
+        .light::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            right: 20%;
+            bottom: 20%;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .light.on::after {
+            opacity: 1;
+        }
+
+        .toggle-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+
+        .toggle-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+        }
+
+        .status {
+            color: #fff;
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="light-container">
+        <div class="light off" id="systemLight" onclick="toggleLight()"></div>
+        <button class="toggle-btn" onclick="toggleLight()">Toggle System Light</button>
+        <div class="status" id="status">SYSTEM OFF</div>
+    </div>
+
+    <script>
+        let isOn = false;
+
+        function toggleLight() {
+            const light = document.getElementById('systemLight');
+            const status = document.getElementById('status');
+            
+            isOn = !isOn;
+            
+            if (isOn) {
+                light.classList.remove('off');
+                light.classList.add('on');
+                status.textContent = 'SYSTEM ON';
+                status.style.color = '#ffeb3b';
+            } else {
+                light.classList.remove('on');
+                light.classList.add('off');
+                status.textContent = 'SYSTEM OFF';
+                status.style.color = '#fff';
+            }
+        }
+    </script>
+</body>
+</html>

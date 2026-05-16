@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Shorts Pro - Ultra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- ALL ORIGINAL STYLES PRESERVED + ADVANCED UPGRADES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-red: #ff0000;
+            --bg-dark: #0f0f0f;
+            --bg-card: rgba(255,255,255,0.05);
+            --text-primary: #fff;
+            --text-secondary: #aaa;
+            --accent-blue: #3ea6ff;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Improved Pro Layout */
+        .app {
+            height: 100vh;
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "sidebar main";
+            grid-template-columns: 240px 1fr;
+            grid-template-rows: 60px 1fr;
+        }
+
+        /* Advanced Header with Glassmorphism */
+        .header {
+            grid-area: header;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo { font-size: 22px; font-weight: 700; letter-spacing: -1px; display: flex; align-items: center; gap: 5px; cursor: pointer;}
+        .logo-icon { color: var(--primary-red); font-size: 28px; }
+
+        .search-container { flex: 0 1 600px; display: flex; align-items: center; }
+        .search-input {
+            width: 100%;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            border-radius: 40px 0 0 40px;
+            background: #121212;
+            color: white;
+            font-size: 16px;
+        }
+        .search-btn {
+            padding: 10px 20px;
+            border: 1px solid #333;
+            background: #222;
+            border-radius: 0 40px 40px 0;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Sidebar Pro */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--bg-dark);
+            padding: 10px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar-item {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 2px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .sidebar-item:hover { background: var(--bg-card); }
+        .sidebar-item.active { background: var(--bg-card); font-weight: 500; }
+
+        /* Main Scrollable Area */
+        .main {
+            grid-area: main;
+            overflow-y: auto;
+            padding: 24px;
+            scroll-behavior: smooth;
+        }
+
+        /* Advanced Card Design */
+        .shorts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .short-card {
+            background: transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .short-thumbnail {
+            aspect-ratio: 9/16;
+            width: 100%;
+            background: #222;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        .short-card:hover .short-thumbnail { transform: scale(1.02); }
+
+        /* Video Player Modal/Overlay */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-overlay.active { display: flex; }
+
+        .shorts-container {
+            width: 400px;
+            height: 90vh;
+            background: #000;
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-controls-side {
+            position: absolute;
+            right: -70px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: #222;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 18px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .action-btn span { font-size: 10px; margin-top: 4px; color: var(--text-secondary); }
+
+        /* Skeleton Loading Effect */
+        .skeleton {
+            background: linear-gradient(90deg, #181818 25%, #282828 50%, #181818 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .app { grid-template-columns: 0 1fr; }
+            .sidebar { display: none; }
+            .search-container { display: none; }
+            .shorts-container { width: 100vw; height: 100vh; border-radius: 0; }
+            .video-controls-side { right: 10px; bottom: 100px; z-index: 10; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app" id="app">
+        <header class="header">
+            <div class="logo-container">
+                <button class="menu-btn" style="background:none; border:none; color:white; font-size:20px; cursor:pointer">☰</button>
+                <div class="logo"><span class="logo-icon">▶</span>YouTube <sup style="font-size: 10px; opacity: 0.6;">Shorts</sup></div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search" id="searchInput">
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <div class="header-actions">
+                <button class="action-btn" style="background:transparent; width:40px; height:40px;">🔔</button>
+                <button class="action-btn" style="background:var(--primary-red); width:40px; height:40px; margin-left:10px;">➕</button>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <div class="sidebar-item active"><span>🏠</span> Home</div>
+            <div class="sidebar-item"><span>📱</span> Shorts</div>
+            <div class="sidebar-item"><span>📺</span> Subscriptions</div>
+            <hr style="opacity: 0.1; margin: 10px 0;">
+            <div class="sidebar-item"><span>📚</span> Library</div>
+            <div class="sidebar-item"><span>⏳</span> History</div>
+            <div class="sidebar-item"><span>❤️</span> Liked Videos</div>
+            <div class="sidebar-item"><span>⬇️</span> Downloads</div>
+        </nav>
+
+        <main class="main" id="mainContent">
+            <h3 style="margin-bottom: 20px;">Trending Shorts</h3>
+            <div class="shorts-grid" id="shortsGrid">
+                <div class="short-card"><div class="short-thumbnail skeleton"></div></div>
+                <div class="short-card"><div class="short-thumbnail skeleton"></div></div>
+                <div class="short-card"><div class="short-thumbnail skeleton"></div></div>
+                <div class="short-card"><div class="short-thumbnail skeleton"></div></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="video-overlay" id="videoOverlay">
+        <button onclick="closePlayer()" style="position:absolute; top:20px; left:20px; background:none; border:none; color:white; font-size:30px; cursor:pointer; z-index:100;">✕</button>
+        
+        <div class="shorts-container">
+            <video id="playerVideo" loop style="width:100%; height:100%; object-fit: cover;"></video>
+            
+            <div style="position:absolute; bottom:0; left:0; width:100%; padding:20px; background:linear-gradient(transparent, rgba(0,0,0,0.8));">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="width:36px; height:36px; background:#555; border-radius:50%;"></div>
+                    <span style="font-weight:bold;" id="playerChannel">@ChannelName</span>
+                    <button style="background:white; color:black; border:none; padding:6px 12px; border-radius:20px; font-weight:bold; font-size:12px;">Subscribe</button>
+                </div>
+                <p id="playerTitle" style="font-size:14px; margin-bottom:10px;">Full Video Description here...</p>
+                <div style="font-size:12px; color:var(--text-secondary)">♫ Original Audio - Creator Name</div>
+            </div>
+
+            <div class="video-controls-side">
+                <button class="action-btn" onclick="likeAnim(this)">👍 <span id="likeCount">12K</span></button>
+                <button class="action-btn">👎 <span>Dislike</span></button>
+                <button class="action-btn">💬 <span>850</span></button>
+                <button class="action-btn">➔ <span>Share</span></button>
+                <button class="action-btn">⋮</button>
+                <div style="width:40px; height:40px; border-radius:8px; border:2px solid white; overflow:hidden; margin-top:10px;">
+                    <div style="width:100%; height:100%; background:linear-gradient(45deg, red, orange);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Advanced Data Structure
+        const videos = [
+            { id: 1, title: "Epic Mountain Bike Jump! 🚲", channel: "@AdrenalineJunkie", likes: "45K", thumb: "https://picsum.photos/id/10/400/700", url: "../../mal" },
+            { id: 2, title: "How to make 1-minute pasta 🍝", channel: "@ChefPro", likes: "120K", thumb: "https://picsum.photos/id/42/400/700", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" },
+            { id: 3, title: "Hidden JavaScript Trick 💻", channel: "@CodeWithMe", likes: "8K", thumb: "https://picsum.photos/id/60/400/700", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" },
+            { id: 4, title: "Tokyo Night Walk 4K 🇯🇵", channel: "@TravelVibes", likes: "210K", thumb: "https://picsum.photos/id/103/400/700", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" },
+            { id: 5, title: "Cute Golden Retriever Puppies 🐶", channel: "@DogGo", likes: "1M", thumb: "https://picsum.photos/id/237/400/700", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" },
+            { id: 6, title: "New AI is scary... 🤖", channel: "@TechTalk", likes: "55K", thumb: "https://picsum.photos/id/201/400/700", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4" }
+        ];
+
+        // Initialize App
+        window.onload = () => {
+            setTimeout(renderGrid, 1000); // Simulate network delay for skeleton effect
+        };
+
+        function renderGrid() {
+            const grid = document.getElementById('shortsGrid');
+            grid.innerHTML = videos.map(v => `
+                <div class="short-card" onclick="openPlayer(${v.id})">
+                    <div class="short-thumbnail" style="background-image: url('${v.thumb}')">
+                        <div style="position:absolute; bottom:10px; left:10px; font-weight:bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5)">
+                            ${v.likes} likes
+                        </div>
+                    </div>
+                    <div style="padding: 10px 0;">
+                        <p style="font-weight:500; font-size:14px; margin-bottom:4px;">${v.title}</p>
+                        <p style="color:var(--text-secondary); font-size:12px;">${v.channel}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Advanced Player Logic
+        function openPlayer(id) {
+            const video = videos.find(v => v.id === id);
+            const overlay = document.getElementById('videoOverlay');
+            const player = document.getElementById('playerVideo');
+            
+            document.getElementById('playerTitle').innerText = video.title;
+            document.getElementById('playerChannel').innerText = video.channel;
+            document.getElementById('likeCount').innerText = video.likes;
+            
+            player.src = video.url;
+            overlay.classList.add('active');
+            player.play();
+        }
+
+        function closePlayer() {
+            const overlay = document.getElementById('videoOverlay');
+            const player = document.getElementById('playerVideo');
+            overlay.classList.remove('active');
+            player.pause();
+            player.src = "";
+        }
+
+        function likeAnim(btn) {
+            btn.style.color = btn.style.color === 'var(--accent-blue)' ? 'white' : 'var(--accent-blue)';
+            btn.style.transform = 'scale(1.3)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 200);
+        }
+
+        // Search Logic
+        document.getElementById('searchInput').addEventListener('keyup', (e) => {
+            const val = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.short-card');
+            cards.forEach((card, index) => {
+                const title = videos[index].title.toLowerCase();
+                card.style.display = title.includes(val) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

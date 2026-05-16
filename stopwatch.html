@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+    background: #0f172a; /* Dark sleek background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.stopwatch-container {
+    background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.display {
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.ms { font-size: 2rem; color: #94a3b8; }
+#e1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: xx-large;
+    font-weight: bold;
+    font-style: oblique;
+    color: rgb(251, 255, 0);
+}
+/* Base Button Styling */
+.btn {
+    padding: 0.8rem 2.2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth easing */
+    box-shadow: 0 4px 15px rgba(141, 134, 134, 0.2);
+}
+
+/* Hover State: Lift and Glow */
+.btn:hover {
+    transform: translateY(-3px); /* Moves button up slightly */
+    filter: brightness(1.1);    /* Makes color pop more */
+}
+
+/* Start Button Specifics */
+.start { 
+    background: #00ff0d; 
+    color: white; 
+    box-shadow: 0 0 15px rgb(159, 218, 151);
+}
+.start:hover {
+    box-shadow: 0 0 25px rgb(126, 207, 123);
+}
+
+/* Stop Button Specifics */
+.stop { 
+    background: #ff0000; 
+    color: white; 
+    box-shadow: 0 0 15px rgb(233, 119, 119);
+}
+.stop:hover {
+    box-shadow: 0 0 25px rgb(216, 95, 95);
+}
+
+/* Reset Button Specifics */
+.reset { 
+    background: #006aff; 
+    color: white; 
+    margin-left: 10px;
+}
+.reset:hover {
+    background: #5695ee;
+}
+
+/* Click Effect */
+.btn:active {
+    transform: translateY(1px); /* Press down effect */
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="main">
+
+    <div class="stopwatch-container">
+    <h1 class="title" id="e1">Stopwatch</h1>
+    <div class="display" id="display">00:00:00.<span class="ms">00</span></div>
+    <div class="controls">
+        <button id="startStop" class="btn start">Start</button>
+        <button id="reset" class="btn reset">Reset</button>
+    </div>
+</div>
+
+</div>
+<script>
+    alert('made by EMAN')
+    let startTime, timerId, elapsedTime = 0;
+const display = document.getElementById('display');
+const startBtn = document.getElementById('startStop');
+
+function formatTime(ms) {
+    let date = new Date(ms);
+    let min = String(date.getUTCMinutes()).padStart(2, '0');
+    let sec = String(date.getUTCSeconds()).padStart(2, '0');
+    let centi = String(Math.floor(date.getUTCMilliseconds() / 10)).padStart(2, '0');
+    return `${min}:${sec}.<span class="ms">${centi}</span>`;
+}
+
+startBtn.addEventListener('click', () => {
+    if (!timerId) {
+        startTime = performance.now() - elapsedTime;
+        timerId = setInterval(() => {
+            elapsedTime = performance.now() - startTime;
+            display.innerHTML = formatTime(elapsedTime);
+        }, 10);
+        startBtn.textContent = 'Stop';
+        startBtn.className = 'btn stop';
+    } else {
+        clearInterval(timerId);
+        timerId = null;
+        startBtn.textContent = 'Start';
+        startBtn.className = 'btn start';
+    }
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+    clearInterval(timerId);
+    timerId = null;
+    elapsedTime = 0;
+    display.innerHTML = '00:00.<span class="ms">00</span>';
+    startBtn.textContent = 'Start';
+    startBtn.className = 'btn start';
+});
+
+</script>
+</body>
+</html>
