@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marksheet Generator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #74ebd5, #ACB6E5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        width: 420px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background: #4CAF50;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #45a049;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background: #4CAF50;
+        color: white;
+    }
+
+    .pass {
+        color: green;
+        font-weight: bold;
+    }
+
+    .fail {
+        color: red;
+        font-weight: bold;
+    }
+
+    .summary {
+        margin-top: 10px;
+        background: #f1f1f1;
+        padding: 10px;
+        border-radius: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Marksheet</h2>
+
+    <input type="text" id="name" placeholder="Student Name">
+
+    <input type="number" id="sub1" placeholder="English Marks">
+    <input type="number" id="sub2" placeholder="Math Marks">
+    <input type="number" id="sub3" placeholder="Science Marks">
+    <input type="number" id="sub4" placeholder="Computer Marks">
+    <input type="number" id="sub5" placeholder="Urdu Marks">
+
+    <button onclick="calculateResult()">Generate Marksheet</button>
+
+    <div id="output"></div>
+</div>
+
+<script>
+function getStatus(mark) {
+    return mark >= 40 ? "Pass" : "Fail";
+}
+
+function calculateResult() {
+    let name = document.getElementById("name").value;
+
+    let subjects = [
+        { name: "English", marks: Number(document.getElementById("sub1").value) },
+        { name: "Math", marks: Number(document.getElementById("sub2").value) },
+        { name: "Science", marks: Number(document.getElementById("sub3").value) },
+        { name: "Computer", marks: Number(document.getElementById("sub4").value) },
+        { name: "Urdu", marks: Number(document.getElementById("sub5").value) }
+    ];
+
+    let total = 0;
+    let tableRows = "";
+    let overallPass = true;
+
+    subjects.forEach(sub => {
+        let status = getStatus(sub.marks);
+        if (status === "Fail") overallPass = false;
+
+        total += sub.marks;
+
+        tableRows += `
+            <tr>
+                <td>${sub.name}</td>
+                <td>${sub.marks}</td>
+                <td class="${status === 'Pass' ? 'pass' : 'fail'}">${status}</td>
+            </tr>
+        `;
+    });
+
+    let percentage = (total / 500) * 100;
+
+    let grade = "";
+    if (percentage >= 80) grade = "A+";
+    else if (percentage >= 70) grade = "A";
+    else if (percentage >= 60) grade = "B";
+    else if (percentage >= 50) grade = "C";
+    else grade = "Fail";
+
+    document.getElementById("output").innerHTML = `
+        <h3>${name}</h3>
+
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Status</th>
+            </tr>
+            ${tableRows}
+        </table>
+
+        <div class="summary">
+            <p><strong>Total:</strong> ${total} / 500</p>
+            <p><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
+            <p><strong>Grade:</strong> ${grade}</p>
+            <p><strong>Overall Result:</strong> 
+                <span class="${overallPass ? 'pass' : 'fail'}">
+                    ${overallPass ? 'PASS' : 'FAIL'}
+                </span>
+            </p>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>

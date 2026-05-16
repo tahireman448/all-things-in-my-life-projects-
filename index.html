@@ -1,35 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-     <!-- Navbar -->
-    <nav  class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="#">EMAN WEBSITE</a>
-            </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Gallery</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Service</a>
-        </li>
-    </div>
-  </div>
-</nav>
+    <link rel="icon" type="image/png" href="../profile/usmanawan new newyork.webp">
+    <title> Eid Countdown</title>
+    <style>
+        @import url('https://googleapis.com');
 
+        :root {
+            --gold: #FFD700;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0051ff;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main-ui {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-card {
+            background: rgb(0, 4, 255);
+            padding: 3rem;
+            border-radius: 40px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .moon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px var(--gold));
+            animation: float 5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        h1 {
+            font-weight: 300;
+            letter-spacing: 6px;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .timer {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .unit {
+            background: rgb(47, 0, 255);
+            padding: 20px 15px;
+            border-radius: 20px;
+            min-width: 85px;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .num {
+            display: block;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .lab {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        #btn-sound {
+            margin-top: 2rem;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.4s;
+            font-size: 0.8rem;
+        }
+
+        #btn-sound.active {
+            background: var(--gold);
+            color: #0400ff;
+            box-shadow: 0 0 20px var(--gold);
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="starCanvas"></canvas>
+
+    <div class="main-ui">
+        <div class="glass-card">
+            <div class="moon">🌟🌝☁</div>
+            <h1>EID AL-ADHA COUNTDOWN</h1>
+
+            <div class="timer">
+                <div class="unit"><span id="d" class="num">00</span>
+                    <div class="lab">Days</div>
+                </div>
+                <div class="unit"><span id="h" class="num">00</span>
+                    <div class="lab">Hours</div>
+                </div>
+                <div class="unit"><span id="m" class="num">00</span>
+                    <div class="lab">Mins</div>
+                </div>
+                <div class="unit"><span id="s" class="num">00</span>
+                    <div class="lab">Secs</div>
+                </div>
+            </div>
+
+            <button id="btn-sound">PLAY CELEBRATION AUDIO</button>
+        </div>
+    </div>
+
+    <!-- Ensure this filename is EXACTLY correct in your folder -->
+    <audio id="eidAudio" src="./mixkit-tick-tock-clock-close-up-1059.wav" loop></audio>
+
+    <script>
+        /** STAR FIELD **/
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < 150; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2,
+                    speed: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => {
+                s.y -= s.speed;
+                if (s.y < 0) s.y = canvas.height;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(drawStars);
+        }
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawStars();
+
+        /** IMPROVED AUDIO & COUNTDOWN **/
+        const target = new Date("June 16, 2026 00:00:00").getTime();
+        const audio = document.getElementById('eidAudio');
+        const btn = document.getElementById('btn-sound');
+        let isPlaying = false;
+
+        btn.onclick = () => {
+            if (!isPlaying) {
+                audio.play();
+                btn.innerHTML = "STOP AUDIO 🔇";
+                btn.classList.add('active');
+                isPlaying = true;
+            } else {
+                audio.pause();
+                btn.innerHTML = "PLAY AUDIO 🔊";
+                btn.classList.remove('active');
+                isPlaying = false;
+            }
+        };
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            if (diff <= 0) {
+                document.querySelector('.glass-card').innerHTML = "<h1 style='font-size:3rem; color:var(--gold)'>Eid Mubarak!</h1>";
+                audio.play();
+                return;
+            }
+
+            document.getElementById('d').innerText = Math.floor(diff / 86400000);
+            document.getElementById('h').innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById('m').innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
 </body>
 </html>
