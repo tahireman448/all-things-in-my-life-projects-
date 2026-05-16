@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Chat </title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+/* 🌈 Animated background */
+body {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  background: linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#00c6ff);
+  background-size: 400% 400%;
+  animation: bg 12s ease infinite;
+}
+
+@keyframes bg {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  color: white;
+
+  border-right: 1px solid rgba(255,255,255,0.1);
+  transition: 0.4s;
+}
+
+.sidebar h2 {
+  margin-bottom: 15px;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.15);
+  color: white;
+  margin-bottom: 15px;
+}
+
+.history p {
+  padding: 8px;
+  font-size: 14px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.history p:hover {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 15px;
+  color: white;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+}
+
+.menu {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* CHAT */
+.chat {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.msg {
+  max-width: 60%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+
+  animation: fade 0.3s ease;
+}
+
+.ai {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.user {
+  background: #00c6ff;
+  color: black;
+  margin-left: auto;
+}
+
+@keyframes fade {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* INPUT */
+.inputBox {
+  display: flex;
+  padding: 15px;
+  gap: 10px;
+}
+
+.inputBox input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.inputBox button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  background: #00c6ff;
+}
+</style>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <h2>EMAN CLONE</h2>
+  <button onclick="newChat()">+ New Chat</button>
+
+  <div class="history">
+    <button onclick="">How to learn JS</button>
+    <button onclick="">Build portfolio</button>
+    <button onclick="">CSS tricks</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="menu" onclick="toggleSidebar()">☰</div>
+    <h3>EMAN AI</h3>
+  </div>
+
+  <!-- CHAT BOX -->
+  <div class="chat" id="chatBox">
+
+    <div class="msg ai">Hello 👋 How can I help you today?</div>
+
+  </div>
+
+  <!-- INPUT -->
+  <div class="inputBox">
+    <input id="input" type="text" placeholder="Ask something..." />
+    <button onclick="sendMsg()">Send</button>
+  </div>
+
+</div>
+
+<script>
+function sendMsg() {
+  let input = document.getElementById("input");
+  let chat = document.getElementById("chatBox");
+
+  if(input.value === "") return;
+
+  // user message
+  let userMsg = document.createElement("div");
+  userMsg.className = "msg user";
+  userMsg.innerText = input.value;
+  chat.appendChild(userMsg);
+
+  // AI reply (fake typing)
+  setTimeout(() => {
+    let aiMsg = document.createElement("div");
+    aiMsg.className = "msg ai";
+    aiMsg.innerText = "Thinking... 🤖";
+    chat.appendChild(aiMsg);
+
+    setTimeout(() => {
+      aiMsg.innerText = "What are you saying ? I don't understand " + input.value;
+    }, 800);
+
+  }, 500);
+
+  input.value = "";
+}
+
+function toggleSidebar() {
+  let sidebar = document.getElementById("sidebar");
+  sidebar.style.width = sidebar.style.width === "0px" ? "260px" : "0px";
+}
+
+function newChat() {
+  document.getElementById("chatBox").innerHTML =
+    '<div class="msg ai">New chat started 🚀</div>';
+}
+</script>
+</body>
+</html>

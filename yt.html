@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate AI SaaS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter}
+
+body{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#00c6ff);
+  background-size:400% 400%;
+  animation:bg 10s ease infinite;
+  color:white;
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* HEADER */
+header{
+  padding:15px;
+  text-align:center;
+  font-weight:700;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+}
+
+/* CHAT */
+#chat{
+  flex:1;
+  padding:15px;
+  overflow:auto;
+}
+
+.msg{
+  max-width:70%;
+  padding:10px 12px;
+  margin:8px 0;
+  border-radius:12px;
+  animation:fade .3s ease;
+}
+
+.user{background:#00c6ff;color:black;margin-left:auto}
+.ai{background:rgba(255,255,255,0.15)}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* INPUT */
+.inputBox{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+}
+
+input{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:25px;
+  outline:none;
+  background:rgba(255,255,255,0.15);
+  color:white;
+}
+
+button{
+  padding:12px 14px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  background:#00c6ff;
+}
+
+.mic{background:#ff4d6d}
+.file{background:#6c5ce7}
+</style>
+</head>
+
+<body>
+
+<header>🚀 Ultimate AI SaaS (Gemini + ChatGPT Level)</header>
+
+<div id="chat"></div>
+
+<div class="inputBox">
+  <input id="input" placeholder="Ask anything..." />
+  <button onclick="send()">Send</button>
+  <button class="mic" onclick="voice()">🎤</button>
+  <button class="file" onclick="file()">📁</button>
+</div>
+
+<input type="file" id="fileInput" hidden>
+
+<script>
+const chat=document.getElementById("chat");
+
+/* ADD MESSAGE */
+function add(text,type){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.innerText=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+  return div;
+}
+
+/* SAVE HISTORY */
+function save(text){
+  let data=JSON.parse(localStorage.getItem("chat")||"[]");
+  data.push(text);
+  localStorage.setItem("chat",JSON.stringify(data));
+}
+
+/* 🔊 SPEECH */
+function speak(text){
+  let s=new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(s);
+}
+
+/* 🤖 AI CALL (GEMINI API) */
+async function ai(text){
+
+  const res = await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=YOUR_GEMINI_API_KEY",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      contents:[{parts:[{text}]}]
+    })
+  });
+
+  const data=await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
+}
+
+/* SEND */
+async function send(){
+  const input=document.getElementById("input");
+  const text=input.value;
+  if(!text) return;
+
+  add(text,"user");
+  save(text);
+  input.value="";
+
+  let box=add("Thinking... 🤖","ai");
+
+  let reply=await ai(text);
+
+  box.innerText="";
+  let i=0;
+
+  function type(){
+    if(i<reply.length){
+      box.innerText+=reply.charAt(i);
+      i++;
+      setTimeout(type,12);
+    }else{
+      speak(reply);
+      save(reply);
+    }
+  }
+  type();
+}
+
+/* 🎤 VOICE INPUT */
+function voice(){
+  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  let rec=new SR();
+  rec.lang="en-US";
+  rec.start();
+
+  rec.onresult=(e)=>{
+    document.getElementById("input").value=e.results[0][0].transcript;
+    send();
+  };
+}
+
+/* 📁 FILE */
+function file(){
+  document.getElementById("fileInput").click();
+
+  document.getElementById("fileInput").onchange=(e)=>{
+    let f=e.target.files[0];
+    if(f){
+      add("Uploaded: "+f.name,"user");
+      add("File analysis feature needs backend upgrade 🤖","ai");
+    }
+  };
+}
+</script>
+
+</body>
+</html>
